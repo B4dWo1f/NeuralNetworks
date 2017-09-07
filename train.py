@@ -229,21 +229,12 @@ LG.info('Error after %s iterations: %s'%((i+1)*N_train,error))
 ## Save network to file (for further training...)
 NetworkWriter.writeToFile(net, f_net)
 LG.info('Neural network saved to %s'%(f_net))
-if trainer.train() < eps:
+if error < eps:
    msg = 'Low error achived (<%s) after '%(eps)
    msg += '%s iterations'%(N_train)
    LG.info(msg)
+elif error > 1e-3: LG.warning('NN probably not fully converged')
 LG.info('Trained with for %s times'%(N_train))
-elif trainer.train() > 1e-3: LG.warning('NN probably not fully converged')
 
 
-LG.info('Training complete. %s times. Error: %s'%(N_train),trainer.train())
-
-#XXX Unnecesary dependence on notify2
-#try: 
-#   import notify2
-#   notify2.init('Trainer')
-#   n = notify2.Notification('Trainer', 'Done')
-#   n.show()
-#except ImportError:
-#   LG.info('Training complete. %s times. Error: %s'%(N_train),trainer.train())
+LG.info('Training complete. %s times. Error: %s'%(N_train, error))

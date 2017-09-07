@@ -117,9 +117,22 @@ def evaluate_net(f_net,inputs):
       cont += 1
    return outputs
 
+def get_w(n):
+   for mod in n.modules:
+      print('')
+      print(mod)
+      for conn in n.connections[mod]:
+         print(conn)
+         #for cc in range(len(conn.params)):
+         #   print(conn.whichBuffers(cc), conn.params[cc])
+
 if __name__ == '__main__':
    ## Read inputs
    f_net = args.f
+   net = NetworkReader.readFrom(f_net) # Re-use existing network
+   get_w(net)
+
+   exit()
    inputs = args.i
 
    if len(args.rest) > 0:
@@ -130,3 +143,4 @@ if __name__ == '__main__':
          inputs = list(map(float,args.rest[1:]))
       except: sys.exit('Wrong usage')
    print(evaluate_net(f_net,inputs))
+
