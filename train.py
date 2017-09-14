@@ -183,7 +183,7 @@ try:
    inL = net['in'].indim
    outL = net['out'].outdim
    LG.info('Resuming training of network stored in %s'%(f_net))
-   if INPUTS.shape[0] != inL or OUTPUTS.shape[0] != outL:
+   if inputs.shape[1] != inL or outputs.shape[1] != outL:
       LG.critical('Loaded neural network from %s is not compatible with the data dimensions in %s'%(f_net,f_data))
       exit()
    # TODO add architecture information
@@ -192,7 +192,6 @@ except:
    inL = arq[0]
    outL = arq[-1]
    net = buildNetwork(*arq,bias=True)
-
 
 
 ## Prepare DataSet
