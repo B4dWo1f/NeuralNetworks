@@ -9,7 +9,7 @@ try: M = np.load(fname)
 except FileNotFoundError: exit('No %s file'%(fname))
 
 
-print('Error:',np.mean(M[-5:]))
+print('Error: %5e'%(np.mean(M[-5:])))
 dolog = False
 
 import matplotlib.pyplot as plt

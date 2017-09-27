@@ -235,7 +235,6 @@ if error < eps:
    msg = 'Low error achived (<%s)'%(eps)
    LG.info(msg)
 elif error > 1e-3: LG.warning('NN probably not fully converged')
-LG.info('Trained with for %s times'%(cont))
 
 
-LG.info('Training complete. %s times. Error: %s'%(N_train, error))
+LG.info('Training complete. %s times. Error: %s'%(cont, error))
