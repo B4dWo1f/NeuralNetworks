@@ -205,35 +205,36 @@ for i in range(inputs.shape[0]):
 ## Trainer
 Lrate = 0.01
 Ldecay = 1.0
-trainer = BackpropTrainer(net, ds) #,learningrate=Lrate,lrdecay=Ldecay)
+trainer = BackpropTrainer(net, ds,lrdecay=Ldecay) #,learningrate=Lrate)
 N_train = 90000
 msg = 'Train the network %s times '%(N_train)
 LG.debug(msg)
 eps = 1e-5
 Err = []
 LG.info('Initial error: %.5e'%(trainer.train()))
-for i in range(N_train):
+cont = 0
+for i in range(10,N_train):
    error = trainer.train()
+   cont += 1
    Err.append( error )
    if os.path.isfile('STOP'): break
-   if i%100 ==0: 
-      LG.debug('%s iterations, error: %s'%(i,Err[-1]))
+   if i%(10**int(np.log10(i))//2) ==0: 
+      LG.debug('%s iterations, error: %s'%(i-10,Err[-1]))
       np.save('Err.npy',Err)
       ## Save network to file (for further training...)
       NetworkWriter.writeToFile(net, f_net)
       LG.info('Neural network saved to %s'%(f_net))
-LG.info('Error after %s iterations: %s'%((i+1)*N_train,error))
+LG.info('Error after %s iterations: %s'%(cont,error))
 
 
 ## Save network to file (for further training...)
 NetworkWriter.writeToFile(net, f_net)
 LG.info('Neural network saved to %s'%(f_net))
 if error < eps:
-   msg = 'Low error achived (<%s) after '%(eps)
-   msg += '%s iterations'%(N_train)
+   msg = 'Low error achived (<%s)'%(eps)
    LG.info(msg)
 elif error > 1e-3: LG.warning('NN probably not fully converged')
-LG.info('Trained with for %s times'%(N_train))
+LG.info('Trained with for %s times'%(cont))
 
 
 LG.info('Training complete. %s times. Error: %s'%(N_train, error))
