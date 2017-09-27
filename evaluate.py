@@ -130,9 +130,9 @@ if __name__ == '__main__':
    ## Read inputs
    f_net = args.f
    net = NetworkReader.readFrom(f_net) # Re-use existing network
-   get_w(net)
+   #get_w(net)
 
-   exit()
+   #exit()
    inputs = args.i
 
    if len(args.rest) > 0:
