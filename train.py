@@ -206,25 +206,26 @@ for i in range(inputs.shape[0]):
 Lrate = 0.01
 Ldecay = 1.0
 trainer = BackpropTrainer(net, ds,lrdecay=Ldecay) #,learningrate=Lrate)
-N_train = 90000
-msg = 'Train the network %s times '%(N_train)
-LG.debug(msg)
-eps = 1e-5
 Err = []
 LG.info('Initial error: %.5e'%(trainer.train()))
-cont = 0
-for i in range(10,N_train):
+cont = 10
+error,eps = 1e5, 1e-5
+while error<eps or not os.path.isfile('STOP'):
    error = trainer.train()
    cont += 1
    Err.append( error )
-   if os.path.isfile('STOP'): break
-   if i%(10**int(np.log10(i))//2) ==0: 
-      LG.debug('%s iterations, error: %s'%(i-10,Err[-1]))
+   #if os.path.isfile('STOP'): break
+   if cont%(10**int(np.log10(cont))//2) ==0: 
+      LG.info('%s iterations, error: %s'%(cont-10,Err[-1]))
       np.save('Err.npy',Err)
       ## Save network to file (for further training...)
       NetworkWriter.writeToFile(net, f_net)
-      LG.info('Neural network saved to %s'%(f_net))
+      LG.debug('Neural network saved to %s'%(f_net))
+cont -= 10
 LG.info('Error after %s iterations: %s'%(cont,error))
+## Save network to file (for further training...)
+NetworkWriter.writeToFile(net, f_net)
+LG.info('Neural network saved to %s'%(f_net))
 
 
 ## Save network to file (for further training...)
