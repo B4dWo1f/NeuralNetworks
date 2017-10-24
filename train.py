@@ -210,7 +210,7 @@ Err = []
 LG.info('Initial error: %.5e'%(trainer.train()))
 cont = 10
 error,eps = 1e5, 1e-5
-while error<eps or not os.path.isfile('STOP'):
+while error>eps or not os.path.isfile('STOP'):
    error = trainer.train()
    cont += 1
    Err.append( error )
