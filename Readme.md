@@ -1,24 +1,35 @@
 # General Feed Forward generator
 
 This repo is a wrapper to some pyBrain functions:
+
   http://pybrain.org/
+  
   https://github.com/pybrain/pybrain
+
 
 
 This repo provides two general, and hopefully useful, scripts to train and evaluate Feed Forward Neural Networks taking care of all the details (normalization of the data and so on).
 
 # Options
   -h, --help       show this help message and exit
+  
   -i I             Name of the input data file
+  
   -o O             Name of the file to save the network
+  
   -n N             Number of columns to be considered as output
+  
   -ar AR [AR ...]  Architecture of the Neural Network (tuple)
+  
   -m               Randomize the order of input data  [Not implemented]
+
 
 # Usage:
 Consider that we have a data file "datos.dat" which contains our training data with format:
+
 input1   input2  input3.......output1   output2   outputN
-The training data set will have M rows (each row is a sample of input-output) and N columns, the first (N-n) columns are inputs, and the last (n) columns ar outputs.
+
+The training data set will have M rows (each row is a sample of input-output) and N columns, the first (N-n) columns are inputs, and the last (n) columns are outputs.
 Let's Consider that datos.dat contains 3 columns (2 input, 1 output), and we want an architecture 2,5,1
 To build the model and train it:
 
