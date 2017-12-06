@@ -1,14 +1,8 @@
 # General Feed Forward generator
 
-This repo is a wrapper to some pyBrain functions:
+This repo is a wrapper to some pyBrain ( http://pybrain.org/ ) functions.
 
-  http://pybrain.org/
-  
-  https://github.com/pybrain/pybrain
-
-
-
-This repo provides two general, and hopefully useful, scripts to train and evaluate Feed Forward Neural Networks taking care of all the details (normalization of the data and so on).
+This repo provides two general, and hopefully useful, scripts to create, train and evaluate general Feed Forward Neural Networks taking care of all the details (dimension, normalization of the data and so on).
 
 # Options
   -h, --help       show this help message and exit
@@ -43,6 +37,7 @@ To use the saved NN I provide the evaluate.py library:
 ./evaluate -f my_cool_NN.xml 0.5
 
 # TO-DO
+- [ ] Previous check of size/architecture of the training data
 - [ ] Include training/validation data
 - [ ] Fragmentation of training data
 - [ ] Randomize order for training data
