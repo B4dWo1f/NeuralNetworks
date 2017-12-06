@@ -21,7 +21,7 @@
 ############################### LOGGING #####################################
 import logging
 import log_help
-logging.basicConfig(level=logging.DEBUG,
+logging.basicConfig(level=logging.INFO,
                  format='%(asctime)s %(name)s:%(levelname)s - %(message)s',
                  datefmt='%Y/%m/%d-%H:%M:%S',
                  filename='trainer.log', filemode='w')
@@ -57,11 +57,9 @@ parser.add_argument('-ar',nargs="+",type=int,default=(1,10,10,1),
                     help='Architecture of the Neural Network (tuple)')
 parser.add_argument('-m',action='store_true',default=False,
                     help='Randomize the order of input data')
-#parser.add_argument('-nb',nargs=1,type=int,default=5000,
-#                    help='Batch size')
 parser.add_argument('rest', nargs='*')
 args = parser.parse_args()
-################################################################################
+
 def usage():
    msg  = 'This code is a general (feed-forward) neural network trainer '
    msg += 'prepared to read a data file with M columns. The first (M-n) '
@@ -77,6 +75,8 @@ def usage():
    msg += '\'my_network.lim\' containing the information for the data treatment'
    print(msg)
    exit()
+################################################################################
+
 
 
 ## Parse and check filename
@@ -97,6 +97,7 @@ LG.info('Architecture: (%s)'%(str(arq)))
 
 ## Parse output files
 f_net = args.o[0]
+if f_net[-4:] != '.xml': f_net += '.xml'
 f_lim = f_net.replace('.xml','.lim')
 LG.info('NN will be saved in file: %s'%(f_net))
 LG.debug('extra information will be saved in file: %s'%(f_lim))
