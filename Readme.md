@@ -33,7 +33,7 @@ The training data set will have M rows (each row is a sample of input-output) an
 Let's Consider that datos.dat contains 3 columns (2 input, 1 output), and we want an architecture 2,5,1
 To build the model and train it:
 
-./train.py -i datos.dat -n 1 -ar 1 5 1 -o "my_cool_NN.xml"
+./train.py -i datos.dat -n 1 -ar 2 5 1 -o "my_cool_NN.xml"
 
 You can check the training process by running: check_train.py
 
