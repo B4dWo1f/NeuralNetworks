@@ -24,7 +24,8 @@ To build the model and train it:
 
 ./train.py -i datos.dat -n 1 -ar 1 5 1 -o "my_cool_NN.xml"
 
-You can check the training process by running: check_train.py 
+You can check the training process by running: check_train.py
+
 Once the training is done, you should have the files my_cool_NN.xml and my_cool_NN.lim, which contains the NN parameters.
 
 To use the saved NN I provide the evaluate.py library:
