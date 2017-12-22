@@ -37,6 +37,8 @@ To use the saved NN I provide the evaluate.py library:
 ./evaluate -f my_cool_NN.xml 0.5
 
 # TO-DO
+- [ ] Separate data processing from Neural Network
+- [ ] Provide object for efficiency 
 - [ ] Previous check of size/architecture of the training data
 - [ ] Include training/validation data
 - [ ] Fragmentation of training data
