@@ -1,8 +1,8 @@
-*.dat
-*.private
-*.xml
-*.lim
-*.log
-*.npy
-__pycache__/
-STOP
+**.dat
+**.private
+**.xml
+**.lim
+**.log
+**.npy
+*/__pycache__/
+**STOP
