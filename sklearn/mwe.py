@@ -1,58 +1,59 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
+import pickle
 import numpy as np
+from sklearn.neural_network import MLPRegressor as MLP
 import matplotlib.pyplot as plt
-from sklearn.neural_network import MLPClassifier
-
-xs = np.array([
-     0, 0,
-     0, 1,
-     1, 0,
-     1, 1]).reshape(4, 2)
 
 
-ys = np.array([0, 1, 1, 0]).reshape(4,)
+## Load training data
+X,Y = np.loadtxt('../example_data/sin.dat',unpack=True)
 
-xs = np.random.uniform(0,41,size=(100,1))
-ys = []
-for x in xs:
-   if 0<= x < 10: ys.append(0.)
-   elif 10<= x < 25: ys.append(1.)
-   elif 25<= x: ys.append(2.)
-ys = np.array(ys)
+X0 = X/np.max(np.abs(X))
+Y0 = Y/np.max(np.abs(Y))
+
+if len(X0.shape) == 1: X0 = X0.reshape((X0.shape[0],1))
 
 
-model = MLPClassifier(
-             activation='tanh', max_iter=10000, hidden_layer_sizes=(4,2))
 
-model.fit(xs, ys)
+## Try to load model
+try:
+   with open('my_dumped_classifier.pkl', 'rb') as fid:
+      model = pickle.load(fid)
+   print('Model loaded')
+except FileNotFoundError:
+   print('Starting new model')
+   model = MLP(activation='logistic',
+               solver='lbfgs',
+               learning_rate='adaptive',
+               learning_rate_init=0.01,
+               alpha=0.01,
+               max_iter=1000,
+               hidden_layer_sizes=(3,5),
+               warm_start=True)
 
-print('score:', model.score(xs, ys)) # outputs 0.5
-x = np.linspace(0,42,50).reshape(50,1)
-y = model.predict(x)
-print(y)
-#print('predictions:', model.predict(xs)) # outputs [0, 0, 0, 0]
-#print('expected:', np.array([0, 1, 1, 0]))
+
+Err = []
+for i in range(100):
+   model.fit(X0, Y0)
+   Err.append(1-model.score(X0,Y0))
+
+import matplotlib.pyplot as plt
 fig, ax = plt.subplots()
-ax.plot(x,y)
-ax.scatter(xs,ys)
+ax.plot(Err)
 plt.show()
 
-import pickle
 # save the classifier
 with open('my_dumped_classifier.pkl', 'wb') as fid:
     pickle.dump(model, fid)    
 
-print('*'*80)
-print('Loading model:')
-# load it again
-with open('my_dumped_classifier.pkl', 'rb') as fid:
-    model_loaded = pickle.load(fid)
-
-x = np.linspace(0,42,50).reshape(50,1)
-y = model_loaded.predict(x)
-import matplotlib.pyplot as plt
+print('score:', model.score(X0, Y0)) # outputs 0.5
+x = np.linspace(min(X0),max(X0),50).reshape(50,1)
+y = model.predict(x)
+#print('predictions:', model.predict(xs)) # outputs [0, 0, 0, 0]
+#print('expected:', np.array([0, 1, 1, 0]))
 fig, ax = plt.subplots()
-ax.plot(x,y)
+ax.scatter(X0,Y0,c='C0')
+ax.plot(x,y,'C1')
 plt.show()
