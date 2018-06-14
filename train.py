@@ -68,7 +68,7 @@ def usage():
    msg += '  -i: Specify the input data file\n'
    msg += '  -n: Specify number of nodes in the output layer [default: 1]\n'
    msg += '  -ar: Specify the architecture of the NN. example -ar 1 5 10 1'
-   msg += ' it is important to not have spaces in this argument'
+   msg += ' it is important to not have spaces in this argument\n'
    msg += '  -o: Specify the file in which to store the neural network '
    msg += '[default: my_network.xml]\n'
    msg += '**Note that the program will create an extra file '
