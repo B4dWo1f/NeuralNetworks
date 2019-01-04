@@ -8,12 +8,19 @@ import matplotlib.pyplot as plt
 
 
 ## Load training data
-X,Y = np.loadtxt('../example_data/sin.dat',unpack=True)
+X,Y,Z = np.loadtxt('../example_data/sin2d.dat',unpack=True)
+M = np.loadtxt('../example_data/sin2d.dat')
+print(M.shape)
+Z = M[:,2]
+M = M[:,0:2]
 
-X0 = X/np.max(np.abs(X))
-Y0 = Y/np.max(np.abs(Y))
+#X0 = X/np.max(np.abs(X))
+#Y0 = Y/np.max(np.abs(Y))
 
-if len(X0.shape) == 1: X0 = X0.reshape((X0.shape[0],1))
+M0 = M/np.max(np.abs(M))
+Z0 = Y/np.max(np.abs(Z))
+
+#if len(Z0.shape) == 1: Z0 = Z0.reshape((Z0.shape[0],1))
 
 
 
@@ -25,7 +32,7 @@ try:
 except FileNotFoundError:
    print('Starting new model')
    model = MLP(activation='logistic',
-               solver='lbfgs',
+               solver='adam',
                learning_rate='adaptive',
                learning_rate_init=0.01,
                alpha=0.01,
@@ -34,21 +41,23 @@ except FileNotFoundError:
                warm_start=True)
 
 
-Err = []
-for i in range(100):
-   model.fit(X0, Y0)
-   Err.append(1-model.score(X0,Y0))
+model.fit(M, Z0)
+#Err = []
+#for i in range(10000):
+#   model.partial_fit(X0, Y0)
+#   Err.append(1-model.score(X0,Y0))
 
-import matplotlib.pyplot as plt
-fig, ax = plt.subplots()
-ax.plot(Err)
-plt.show()
+#import matplotlib.pyplot as plt
+#fig, ax = plt.subplots()
+#ax.plot(Err)
+#plt.show()
 
 # save the classifier
 with open('my_dumped_classifier.pkl', 'wb') as fid:
     pickle.dump(model, fid)    
 
-print('score:', model.score(X0, Y0)) # outputs 0.5
+print('score:', model.score(M0, Z0)) # outputs 0.5
+exit()
 x = np.linspace(min(X0),max(X0),50).reshape(50,1)
 y = model.predict(x)
 #print('predictions:', model.predict(xs)) # outputs [0, 0, 0, 0]
@@ -56,4 +65,4 @@ y = model.predict(x)
 fig, ax = plt.subplots()
 ax.scatter(X0,Y0,c='C0')
 ax.plot(x,y,'C1')
-plt.show()
+#plt.show()
